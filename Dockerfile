@@ -1,5 +1,5 @@
-# Usando uma imagem base com Maven para realizar o build
-FROM maven:3.8.1-jdk-11 AS build
+# Usando uma imagem base com Maven e JDK 17 para realizar o build
+FROM maven:3.8.1-openjdk-17 AS build
 
 # Definindo o diretório de trabalho
 WORKDIR /app
@@ -11,8 +11,8 @@ COPY src ./src/
 # Realizando o build com Maven
 RUN mvn clean package
 
-# Utilizando a imagem de OpenJDK para rodar a aplicação
-FROM openjdk:11-jre-slim
+# Utilizando a imagem de OpenJDK 17 para rodar a aplicação
+FROM openjdk:17-jre-slim
 
 # Copiando o JAR resultante do build para a nova imagem
 COPY --from=build /app/target/doefacil-0.0.1-SNAPSHOT.jar /app/seu-arquivo.jar
