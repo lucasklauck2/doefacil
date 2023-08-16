@@ -1,5 +1,6 @@
 package br.com.lucasklauck.doefacil.domain;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -10,12 +11,12 @@ import org.hibernate.annotations.UpdateTimestamp;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
@@ -41,13 +42,13 @@ public class Anuncio {
 	private String descricao;
 
 	@Column(name = "nr_quantidade")
-	private Long quantidade;
+	private BigDecimal quantidade;
 	
 	@Column(name = "nr_latitude")
-	private Long latitude;
+	private BigDecimal latitude;
 	
 	@Column(name = "nr_longitude")
-	private Long longitude;
+	private BigDecimal longitude;
 	
 	@Column(name = "fl_aberto")
 	private Boolean aberto;
@@ -65,5 +66,8 @@ public class Anuncio {
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cd_usuario", referencedColumnName = "id_usuario", nullable = false, insertable = false, updatable = false)
 	private Usuario usuario;
+    
+    @OneToMany(mappedBy = "anuncio", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private List<ImagemAnuncio> listaImagens = new ArrayList<>();
 
 }
