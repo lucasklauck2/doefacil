@@ -12,7 +12,7 @@ COPY src ./src/
 RUN mvn clean package
 
 # Utilizando a imagem de OpenJDK 17 para rodar a aplicação
-FROM openjdk:17-jre-slim
+FROM openjdk:17-oracle
 
 # Copiando o JAR resultante do build para a nova imagem
 COPY --from=build /app/target/doefacil-0.0.1-SNAPSHOT.jar /app/seu-arquivo.jar
